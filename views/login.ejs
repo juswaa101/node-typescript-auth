@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Login</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" href="/fontawesome-free/css/all.min.css" />
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+      body {
+        font-family: "Poppins", sans-serif;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row d-flex justify-content-center align-items-center vh-100">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              <h1>Login here</h1>
+            </div>
+            <form id="loginForm">
+              <div class="card-body">
+                <label class="form-label">Email: </label>
+                <input
+                  type="email"
+                  class="form-control"
+                  placeholder="Enter your email"
+                  name="email"
+                  id="email"
+                  required
+                />
+                <label class="form-label mt-2">Password: </label>
+                <input
+                  type="password"
+                  class="form-control"
+                  minlength="6"
+                  maxlength="32"
+                  placeholder="Enter your password"
+                  name="password"
+                  id="password"
+                  required
+                />
+              </div>
+              <div class="card-footer">
+                <button type="button" class="btn btn-primary" id="loginBtn">
+                  Login
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  id="registerBack"
+                >
+                  Register Here
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JavaScript Libraries -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+      integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- jQuery Script -->
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Sweetalert Script -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Font Awesome scripts -->
+    <script src="../vendor/fontawesome-free/js/all.min.js"></script>
+
+    <script src="js/login.js"></script>
+  </body>
+</html>
