@@ -4,7 +4,8 @@
 1. clone the project
 2. npm install
 3. rename .env.example to .env
-4. import jwt-auth.sql to any sql database
+4. create database name jwt-auth and import jwt-auth sql file.
 5. run the project npm run dev or nodemon app
 
+landing url: localhost:8000/login
 <h3>That's it, enjoy!</h3>
