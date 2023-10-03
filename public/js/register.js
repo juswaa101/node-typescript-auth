@@ -9,6 +9,10 @@ $(document).ready(function () {
 
     $("#loginBack").prop("disabled", true);
 
+    $("#name-error").html("");
+    $("#email-error").html("");
+    $("#password-error").html("");
+
     // get all the data in the form
     let registerForm = $("#registerForm")[0];
     let registerFormData = new FormData(registerForm);
@@ -43,22 +47,14 @@ $(document).ready(function () {
           // check if user email is already existing
           if (response.status === 409) {
             $("#email").val("");
-            Swal.fire({
-              title: "Email Exists",
-              text: "User Email Already Exists!",
-              icon: "error",
-            });
+            $("#email-error").html(response.message ?? "");
           }
 
           // check if user input is not valid
           if (response.status === 422) {
-            Swal.fire({
-              title: "Validation Error",
-              html: `<pre>${response.errors[0] ?? ""}\n${
-                response.errors[1] ?? ""
-              }\n${response.errors[2] ?? ""}</pre>`,
-              icon: "error",
-            });
+            $("#name-error").html(response.errors[0] ?? "");
+            $("#email-error").html(response.errors[1] ?? "");
+            $("#password-error").html(response.errors[2] ?? "");
           }
 
           // check if something went wrong while submitting the request
@@ -87,16 +83,21 @@ $(document).ready(function () {
     }, 1000);
   });
 
+  // login link button event handler
   $("#loginBack").click(function (e) {
     e.preventDefault();
 
+    // disable button and load the spinner
     $("#loginBack").prop("disabled", true);
     $("#loginBack").html("<i class='fa fa-spinner fa-spin'></i> Loading");
 
+    // delay the request by 1 second
     setTimeout(() => {
+      // enable button and disable the spinner
       $("#loginBack").prop("disabled", false);
       $("#loginBack").html("Login Here");
 
+      // go to register form
       location.href = "/login";
     }, 1000);
   });

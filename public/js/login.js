@@ -1,4 +1,10 @@
 $(document).ready(function () {
+  // check if email is remembered
+  if (localStorage.getItem("email") !== null) {
+    $("#email").val(localStorage.getItem("email"));
+    $('#remember').prop('checked', true);
+  }
+
   // login button event handler
   $("#loginBtn").click(function (e) {
     e.preventDefault();
@@ -8,6 +14,10 @@ $(document).ready(function () {
     $("#loginBtn").html("<i class='fa fa-spinner fa-spin'></i> Loading");
 
     $("#registerBack").prop("disabled", true);
+
+    $("#email-error").html("");
+    $("#password-error").html("");
+    $("#auth-error").html("");
 
     // get all the data in the form
     let loginForm = $("#loginForm")[0];
@@ -31,28 +41,19 @@ $(document).ready(function () {
           $("#registerBack").prop("disabled", false);
 
           // check if user login succeed
-          if (response.status === 200) {
+          if (response.status === 200 && response.data[0].login) {
             location.href = "/welcome";
           }
 
           // check if user is not authenticated
           if (response.status === 401) {
-            Swal.fire({
-              title: "Authentication Error",
-              text: response.message ?? "",
-              icon: "error",
-            });
+            $("#auth-error").html(response.message ?? "");
           }
 
           // check if user input is not valid
           if (response.status === 422) {
-            Swal.fire({
-              title: "Validation Error",
-              html: `<pre>${response.errors[0] ?? ""}\n${
-                response.errors[1] ?? ""
-              }</pre>`,
-              icon: "error",
-            });
+            $("#email-error").html(response.errors[0] ?? "");
+            $("#password-error").html(response.errors[1] ?? "");
           }
 
           // check if something went wrong while submitting the request
@@ -81,17 +82,29 @@ $(document).ready(function () {
     }, 1000);
   });
 
+  // register link button event handler
   $("#registerBack").click(function (e) {
     e.preventDefault();
 
+    // disable button and load the spinner
     $("#registerBack").prop("disabled", true);
     $("#registerBack").html("<i class='fa fa-spinner fa-spin'></i> Loading");
 
+    // delay the request by 1 second
     setTimeout(() => {
+      // enable button and disable the spinner
       $("#registerBack").prop("disabled", false);
       $("#registerBack").html("Login Here");
 
+      // go to register form
       location.href = "/register";
     }, 1000);
+  });
+
+  // remember me button event handler
+  $("#remember").change(function (e) {
+    if ($(this).is(":checked") && $("#email").val().length > 0) {
+      localStorage.setItem("email", $("#email").val() ?? "");
+    }
   });
 });

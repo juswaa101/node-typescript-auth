@@ -17,6 +17,18 @@ class PageController {
         res.render("welcome");
     }
 
+    verificationPage = (req: Request, res: Response): void => {
+        res.render("verify-account", { id: req.params?.id });
+    }
+
+    forgotPasswordPage = (req: Request, res: Response): void => {
+        res.render("forgot-password");
+    }
+
+    resetPasswordPage = (req: Request, res: Response): void => {
+        res.render("reset-password", { verify_token: req.params.verify_token });
+    }
+
 }
 
 export default PageController;
