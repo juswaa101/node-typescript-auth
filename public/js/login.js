@@ -106,5 +106,8 @@ $(document).ready(function () {
     if ($(this).is(":checked") && $("#email").val().length > 0) {
       localStorage.setItem("email", $("#email").val() ?? "");
     }
+    else {
+      localStorage.removeItem("email");
+    }
   });
 });
