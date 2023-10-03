@@ -26,17 +26,30 @@
   </head>
   `
   <body>
-    <div class="container p-3">
-      <h1>
-        Welcome, <% if (localStorage.getItem("email")?.length !== 0) { %> <%=
-        localStorage.getItem("email") %> <% } %>
-      </h1>
-      <p>
-        Your token: <% if (localStorage.getItem("_token")?.length !== 0) { %>
-        <%= localStorage.getItem("_token") %> <% } %>
-      </p>
-
-      <a href="/api/logout" class="text-decoration-none">Logout</a>
+    <div class="container">
+      <div class="row d-flex justify-content-center align-items-center vh-100">
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <div class="card mx-4">
+              <div class="card-body p-4">
+                <h1>Express JWT</h1>
+                <h5>
+                  Welcome, <% if (localStorage.getItem("email")?.length !== 0) { %> <%=
+                  localStorage.getItem("email") %> <% } %>
+                </h5>
+                
+                <label class="form-label my-2 mt-3">Your token:</label>
+                <p>
+                  <% if (localStorage.getItem("_token")?.length !== 0) { %>
+                  <b><i><%= localStorage.getItem("_token") %></i></b> <% } %>
+                </p>
+          
+                <a href="/api/logout" class="text-decoration-none">Logout</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- Bootstrap JavaScript Libraries -->
     <script
