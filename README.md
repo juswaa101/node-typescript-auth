@@ -12,7 +12,7 @@
 <h3>Features</h3>
 1. Email Verification <br/>
 2. Forgot Password Request thru Email <br/>
-3. JWT Authenticatio
+3. JWT Authentication
 
 landing url: localhost:8000/login
 
