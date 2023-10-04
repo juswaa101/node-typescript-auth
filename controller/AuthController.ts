@@ -167,13 +167,9 @@ class AuthController {
                 this.response.error(res, 422, "", formatError);
             } else {
                 let hash_password = await bcrypt.hash(new_password, 10);
-                db.query("UPDATE users SET password = ? WHERE verify_token = ?", [hash_password, verify_token],
-                    (updatePasswordError, updatePasswordResult) => {
-                        if (updatePasswordError) {
-                            this.response.error(res, 500, "Updating users password query fails");
-                        }
-                        this.response.success(res, 200, "Password changed successfully!");
-                    });
+
+                // call verify token validity service
+                await this.auth.verifyTokenValidityService(req, res, hash_password, verify_token);
             }
         }
         catch (e) {

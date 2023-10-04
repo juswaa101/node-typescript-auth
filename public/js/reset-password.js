@@ -41,6 +41,19 @@ $(document).ready(function () {
             });
           }
 
+          // if verify token isnt existing
+          if (response.status === 404) {
+            Swal.fire({
+              title: "Error",
+              text: "Verify Token is not existing anymore",
+              icon: "error",
+              allowEscapeKey: false,
+              allowOutsideClick: false,
+            }).then(() => {
+              location.href = "/login";
+            });
+          }
+
           // if validation fails
           if (response.status === 422) {
             $("#new_password_error").html(response.errors[0] ?? "");
