@@ -142,28 +142,30 @@ class AuthenticationService {
         });
     }
 
-    verifyTokenValidityService = (req: Request, res: Response, hash_password: string, verify_token: string): void => {
-        db.query("SELECT * FROM users WHERE verify_token = ?", [verify_token], (findError, findResult) => {
-            // if finding verify token fails throw error
-            if (findError) {
-                this.response.error(res, 500, "Finding existing user with token fails");
-            }
+    verifyTokenValidityService = (req: Request, res: Response, hash_password: string, verify_token: string): Promise<any> => {
+        return new Promise((resolve, reject) => {
+            db.query("SELECT * FROM users WHERE verify_token = ?", [verify_token], (findError, findResult) => {
+                // if finding verify token fails throw error
+                if (findError) {
+                    reject(this.response.error(res, 500, "Finding existing user with token fails"));
+                }
 
-            // if verify token still exists in the database
-            if (findResult.length > 0) {
-                // update the password with whom verify token it is
-                db.query("UPDATE users SET password = ? WHERE verify_token = ?", [hash_password, verify_token],
-                    (updatePasswordError, updatePasswordResult) => {
-                        // if there is an error updating the user password
-                        if (updatePasswordError) {
-                            this.response.error(res, 500, "Updating users password query fails");
-                        }
-                        this.response.success(res, 200, "Password changed successfully!");
-                    });
-            }
-            else {
-                this.response.error(res, 404, "This verify token isnt existing anymore");
-            }
+                // if verify token still exists in the database
+                if (findResult.length > 0) {
+                    // update the password with whom verify token it is
+                    db.query("UPDATE users SET password = ? WHERE verify_token = ?", [hash_password, verify_token],
+                        (updatePasswordError, updatePasswordResult) => {
+                            // if there is an error updating the user password
+                            if (updatePasswordError) {
+                                resolve(this.response.error(res, 500, "Updating users password query fails"));
+                            }
+                            resolve(this.response.success(res, 200, "Password changed successfully!"));
+                        });
+                }
+                else {
+                    resolve(this.response.error(res, 404, "This verify token isnt existing anymore"));
+                }
+            });
         });
     }
 }

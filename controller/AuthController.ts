@@ -147,8 +147,6 @@ class AuthController {
                     }
                 })
             }
-
-
         }
         catch (e) {
             this.response.error(res, 500, "Something went wrong!");
