@@ -21,19 +21,19 @@ class PageController {
     verificationPage = (req: Request, res: Response): void => {
         let id: string = req.params?.id;
 
-        // find user id in database
-        db.query("SELECT * FROM users WHERE id = ?", [id], (err, result) => {
+        // find not verified user yet in database
+        db.query("SELECT * FROM users WHERE id = ? AND verify_token IS NULL", [id], (err, result) => {
             // if there is an error, throw it
             if (err) {
                 return;
             }
 
-            // if there is a user existing
+            // if there is a user existing without verify token
             if (result.length > 0) {
                 // redirect to verification page
                 res.render("verify-account", { id });
             }
-            // otherwise, no user
+            // otherwise, user has already verify token
             else {
                 // redirect back to login
                 res.redirect("/login");
@@ -46,7 +46,8 @@ class PageController {
     }
 
     resetPasswordPage = (req: Request, res: Response): void => {
-        res.render("reset-password", { verify_token: req.params.verify_token });
+        let verify_token: string = req.params?.verify_token;
+        res.render("reset-password", { verify_token });
     }
 
 }
