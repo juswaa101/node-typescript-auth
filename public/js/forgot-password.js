@@ -84,12 +84,16 @@ $(document).ready(function () {
   $("#loginBack").click(function (e) {
     e.preventDefault();
 
+    NProgress.start();
+
     // disable button and load the spinner
     $("#loginBack").prop("disabled", true);
     $("#loginBack").html("<i class='fa fa-spinner fa-spin'></i> Loading");
 
     // delay the request by 1 second
     setTimeout(() => {
+      NProgress.done();
+
       // enable button and disable the spinner
       $("#loginBack").prop("disabled", false);
       $("#loginBack").html("Login Here");
