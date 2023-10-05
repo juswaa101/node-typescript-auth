@@ -36,7 +36,7 @@ class PageController {
             // otherwise, user has already verify token
             else {
                 // redirect back to login
-                res.redirect("/login");
+                res.render("./errors/404");
             }
         });
     }

@@ -36,5 +36,5 @@ app.use(AuthRoutes);
 
 // page not found route
 app.use((req: Request, res: Response) => {
-    res.render("404");
+    res.render("./errors/404");
 });

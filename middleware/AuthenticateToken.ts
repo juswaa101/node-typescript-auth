@@ -26,14 +26,14 @@ export = (() => {
             // check if token is not existing
             // otherwise it is unauthenticated
             if (!token) {
-                return res.redirect("/login")
+                return res.render("./errors/401");
             };
 
             // verify user token
             jwt.verify(token, process.env.ACCESS_TOKEN_SECRET as string, (err: any, user: any) => {
                 // check if there is an error
                 if (err) {
-                    return res.redirect("/login");
+                    return res.render("./errors/403");
                 }
                 else {
                     /* 
