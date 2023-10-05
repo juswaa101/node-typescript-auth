@@ -1,13 +1,20 @@
 $(document).ready(function () {
+  NProgress.configure({ showSpinner: false });
+
+  NProgress.start();
+  NProgress.done();
+
   // check if email is remembered
   if (localStorage.getItem("email") !== null) {
     $("#email").val(localStorage.getItem("email"));
-    $('#remember').prop('checked', true);
+    $("#remember").prop("checked", true);
   }
 
   // login button event handler
   $("#loginBtn").click(function (e) {
     e.preventDefault();
+
+    NProgress.start();
 
     // disable the button and display the loading spinner
     $("#loginBtn").prop("disabled", true);
@@ -34,6 +41,8 @@ $(document).ready(function () {
         cache: false,
         dataType: "json",
         success: function (response) {
+          NProgress.done();
+
           // if request is success, stop loading and enable the button again
           $("#loginBtn").prop("disabled", false);
           $("#loginBtn").html("Login");
@@ -66,6 +75,8 @@ $(document).ready(function () {
           }
         },
         error: function (err) {
+          NProgress.done();
+
           // if request has error, stop loading and enable the button again
           $("#loginBtn").prop("disabled", false);
           $("#loginBtn").html("Login");
@@ -86,12 +97,16 @@ $(document).ready(function () {
   $("#registerBack").click(function (e) {
     e.preventDefault();
 
+    NProgress.start();
+
     // disable button and load the spinner
     $("#registerBack").prop("disabled", true);
     $("#registerBack").html("<i class='fa fa-spinner fa-spin'></i> Loading");
 
     // delay the request by 1 second
     setTimeout(() => {
+      NProgress.done();
+
       // enable button and disable the spinner
       $("#registerBack").prop("disabled", false);
       $("#registerBack").html("Login Here");
@@ -103,11 +118,14 @@ $(document).ready(function () {
 
   // remember me button event handler
   $("#remember").change(function (e) {
+    NProgress.start();
+
     if ($(this).is(":checked") && $("#email").val().length > 0) {
       localStorage.setItem("email", $("#email").val() ?? "");
-    }
-    else {
+    } else {
       localStorage.removeItem("email");
+      $('#email').val("");
     }
+    NProgress.done();
   });
 });

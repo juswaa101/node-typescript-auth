@@ -1,6 +1,13 @@
 $(document).ready(function () {
+  NProgress.configure({ showSpinner: false });
+
+  NProgress.start();
+  NProgress.done();
+
   $("#verifyBtn").click(function (e) {
     e.preventDefault();
+
+    NProgress.start();
 
     // disable the button and display the loading spinner
     $("#verifyBtn").prop("disabled", true);
@@ -16,6 +23,8 @@ $(document).ready(function () {
         url: "/api/verify-account/" + id,
         dataType: "json",
         success: function (response) {
+          NProgress.done();
+
           // enable button and stop loading
           $("#verifyBtn").prop("disabled", false);
           $("#verifyBtn").html("Verify");
@@ -55,6 +64,8 @@ $(document).ready(function () {
           }
         },
         error: function (err) {
+          NProgress.done();
+
           $("#verifyBtn").prop("disabled", false);
           $("#verifyBtn").html("Verify");
           Swal.fire({

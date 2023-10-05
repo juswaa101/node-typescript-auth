@@ -1,7 +1,14 @@
 $(document).ready(function () {
+  NProgress.configure({ showSpinner: false });
+
+  NProgress.start();
+  NProgress.done();
+
   // Send email request button event handler
   $("#sendRequestBtn").click(function (e) {
     e.preventDefault();
+
+    NProgress.start();
 
     // disable the button and display the loader
     $("#sendRequestBtn").prop("disabled", true);
@@ -23,6 +30,8 @@ $(document).ready(function () {
         contentType: false,
         cache: false,
         success: function (response) {
+          NProgress.done();
+
           // enable button and stop loading
           $("#sendRequestBtn").prop("disabled", false);
           $("#sendRequestBtn").html("Send Request");
@@ -55,6 +64,8 @@ $(document).ready(function () {
           }
         },
         error: function (err) {
+          NProgress.done();
+
           // enable button and stop loading
           $("#sendRequestBtn").prop("disabled", false);
           $("#sendRequestBtn").html("Send Request");

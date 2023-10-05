@@ -1,7 +1,14 @@
 $(document).ready(function () {
+  NProgress.configure({ showSpinner: false });
+
+  NProgress.start();
+  NProgress.done();
+
   // Submit button event handler
   $("#changePasswordBtn").click(function (e) {
     e.preventDefault();
+
+    NProgress.start();
 
     // disable the button and display the loader
     $("#changePasswordBtn").prop("disabled", true);
@@ -26,6 +33,8 @@ $(document).ready(function () {
         contentType: false,
         cache: false,
         success: function (response) {
+          NProgress.done();
+
           // enable button and stop loading
           $("#changePasswordBtn").prop("disabled", false);
           $("#changePasswordBtn").html("Send Request");
@@ -69,6 +78,8 @@ $(document).ready(function () {
           }
         },
         error: function (err) {
+          NProgress.done();
+
           // enable button and stop loading
           $("#changePasswordBtn").prop("disabled", false);
           $("#changePasswordBtn").html("Send Request");

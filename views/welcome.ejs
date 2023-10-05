@@ -15,8 +15,11 @@
     <link rel="stylesheet" href="/fontawesome-free/css/all.min.css" />
 
     <link rel="stylesheet" href="/resources/css/font.css" />
+
+    <!-- NProgress Styles -->
+    <link rel="stylesheet" href="/resources/css/nprogress@0.2.0.css" />
   </head>
-  `
+  
   <body>
     <div class="container">
       <div class="row d-flex justify-content-center align-items-center vh-100">
@@ -52,6 +55,9 @@
     <!-- jQuery Script -->
     <script src="/resources/js/jquery-3.7.1.js"></script>
 
+    <!-- NProgress Script -->
+    <script src="/resources/js/nprogress@0.2.0.js"></script>
+
     <!-- Sweetalert Script -->
     <script src="/resources/js/sweetalert2.js"></script>
 
@@ -59,5 +65,14 @@
     <script src="../vendor/fontawesome-free/js/all.min.js"></script>
 
     <script src="/js/authenticate-token.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        NProgress.configure({ showSpinner: false });
+
+        NProgress.start();
+        NProgress.done();
+      });
+    </script>
   </body>
 </html>

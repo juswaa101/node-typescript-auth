@@ -12,7 +12,12 @@
     <!-- Bootstrap CSS v5.2.1 -->
     <link rel="stylesheet" href="/resources/css/bootstrap@5.2.1.css" />
 
+    <link rel="stylesheet" href="/fontawesome-free/css/all.min.css" />
+
     <link rel="stylesheet" href="/resources/css/font.css" />
+
+    <!-- NProgress Styles -->
+    <link rel="stylesheet" href="/resources/css/nprogress@0.2.0.css" />
   </head>
 
   <body>
@@ -23,7 +28,7 @@
           <span class="text-danger">Oops!</span> Page not found.
         </p>
         <p class="lead">The page you’re looking for doesn’t exist.</p>
-        <a href="/login" class="btn btn-primary">Back</a>
+        <button class="btn btn-primary" id="back">Back</button>
       </div>
     </div>
 
@@ -31,5 +36,46 @@
     <script src="/resources/js/core@2.11.6.js"></script>
 
     <script src="/resources/js/bootstrap@5.2.1.js"></script>
+
+    <!-- jQuery Script -->
+    <script src="/resources/js/jquery-3.7.1.js"></script>
+
+    <!-- NProgress Script -->
+    <script src="/resources/js/nprogress@0.2.0.js"></script>
+
+    <!-- Font Awesome scripts -->
+    <script src="../vendor/fontawesome-free/js/all.min.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        NProgress.configure({ showSpinner: false });
+
+        NProgress.start();
+        NProgress.done();
+
+        // register link button event handler
+        $("#back").click(function (e) {
+          e.preventDefault();
+
+          NProgress.start();
+
+          // disable button and load the spinner
+          $("#back").prop("disabled", true);
+          $("#back").html("<i class='fa fa-spinner fa-spin'></i> Loading");
+
+          // delay the request by 1 second
+          setTimeout(() => {
+            NProgress.done();
+
+            // enable button and disable the spinner
+            $("#back").prop("disabled", false);
+            $("#back").html("Back");
+
+            // go to register form
+            location.href = "/login";
+          }, 1000);
+        });
+      });
+    </script>
   </body>
 </html>
