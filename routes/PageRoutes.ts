@@ -6,6 +6,7 @@ export = (() => {
     const app: Router = express.Router();
     const pageController: PageController = new PageController();
 
+    // authentication page endpoints
     app.get("/login", pageController.loginPage);
     app.get("/register", pageController.registerPage);
     app.get("/verification-page/:id", pageController.verificationPage);

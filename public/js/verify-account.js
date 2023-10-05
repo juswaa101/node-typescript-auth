@@ -26,6 +26,8 @@ $(document).ready(function () {
               title: "Success",
               text: "Account Verification Success!",
               icon: "success",
+              allowEscapeKey: false,
+              allowOutsideClick: false,
             }).then(() => {
               location.href = "/login";
             });
@@ -36,6 +38,10 @@ $(document).ready(function () {
               title: "Verification Error",
               text: "Account is already verified",
               icon: "error",
+              allowEscapeKey: false,
+              allowOutsideClick: false,
+            }).then(() => {
+              location.href = "/login";
             });
           }
 
