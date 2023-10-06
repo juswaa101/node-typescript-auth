@@ -3,6 +3,7 @@ import { LocalStorage } from "node-localstorage";
 import dotenv from "dotenv";
 import db from "../config/Database";
 import bcrypt from "bcrypt";
+import Cryptr from "cryptr";
 import jwt from "jsonwebtoken";
 import ResponseHelper from "../config/ResponseHelper";
 import EmailService from "./EmailService";
@@ -104,8 +105,11 @@ class AuthenticationService {
                         return;
                     }
 
+                    // set secret key of cryptr
+                    const cryptr = new Cryptr(process.env.ACCESS_TOKEN_SECRET as string ?? "");
+
                     // mail details
-                    let id: any = result.insertId;
+                    let id: any = cryptr.encrypt(result.insertId);
                     let sender: string = "express@jwt.com";
                     let recipient: string | undefined = email?.toString();
                     let subject = "Account Verification";

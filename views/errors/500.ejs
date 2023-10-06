@@ -28,6 +28,7 @@
           <span class="text-danger">Oops!</span> Something went wrong
         </p>
         <p class="lead">Your request didn't process correctly</p>
+        <button class="btn btn-primary" id="back">Back</button>
       </div>
     </div>
 
@@ -51,6 +52,28 @@
 
         NProgress.start();
         NProgress.done();
+
+        $("#back").click(function (e) {
+          e.preventDefault();
+
+          NProgress.start();
+
+          // disable button and load the spinner
+          $("#back").prop("disabled", true);
+          $("#back").html("<i class='fa fa-spinner fa-spin'></i> Loading");
+
+          // delay the request by 1 second
+          setTimeout(() => {
+            NProgress.done();
+
+            // enable button and disable the spinner
+            $("#back").prop("disabled", false);
+            $("#back").html("Back");
+
+            // go back
+            history.back();
+          }, 1000);
+        });
       });
     </script>
   </body>

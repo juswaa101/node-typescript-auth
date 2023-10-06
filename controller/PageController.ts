@@ -1,7 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import { LocalStorage } from "node-localstorage";
+import dotenv from "dotenv";
 import db from "../config/Database";
+import Cryptr from "cryptr";
 
+dotenv.config();
 global.localStorage = new LocalStorage('./scratch');
 
 class PageController {
@@ -19,26 +22,34 @@ class PageController {
     }
 
     verificationPage = (req: Request, res: Response): void => {
-        let id: string = req.params?.id;
+        try {
+            // set secret key of cryptr
+            const cryptr = new Cryptr(process.env.ACCESS_TOKEN_SECRET as string ?? "");
 
-        // find not verified user yet in database
-        db.query("SELECT * FROM users WHERE id = ? AND verify_token IS NULL", [id], (err, result) => {
-            // if there is an error, throw it
-            if (err) {
-                return;
-            }
+            let id: string = cryptr.decrypt(req.params?.id);
 
-            // if there is a user existing without verify token
-            if (result.length > 0) {
-                // redirect to verification page
-                res.render("verify-account", { id });
-            }
-            // otherwise, user has already verify token
-            else {
-                // redirect back to login
-                res.render("./errors/404");
-            }
-        });
+            // find not verified user yet in database
+            db.query("SELECT * FROM users WHERE id = ? AND verify_token IS NULL", [id], (err, result) => {
+                // if there is an error, throw it
+                if (err) {
+                    return;
+                }
+
+                // if there is a user existing without verify token
+                if (result.length > 0) {
+                    // redirect to verification page
+                    res.render("verify-account", { id });
+                }
+                // otherwise, user has already verify token
+                else {
+                    // redirect back to login
+                    res.render("./errors/404");
+                }
+            });
+        }
+        catch (e) {
+            res.render("./errors/500");
+        }
     }
 
     forgotPasswordPage = (req: Request, res: Response): void => {
