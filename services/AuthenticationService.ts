@@ -121,24 +121,26 @@ class AuthenticationService {
         });
     }
 
-    sendPasswordResetToUserVerified = (req: Request, res: Response, email: string): void => {
-        db.query("SELECT * FROM users WHERE email = ? AND verify_token IS NOT NULL", [email], async (err, results) => {
-            // if finding of verified user query fails throw an error
-            if (err) {
-                this.response.error(res, 500, "Finding verified user fails");
-            }
+    sendPasswordResetToUserVerified = (req: Request, res: Response, email: string): Promise<any> => {
+        return new Promise((resolve, reject) => {
+            db.query("SELECT * FROM users WHERE email = ? AND verify_token IS NOT NULL", [email], async (err, results) => {
+                // if finding of verified user query fails throw an error
+                if (err) {
+                    reject(this.response.error(res, 500, "Finding verified user fails"));
+                }
 
-            // if there is user verified, then send an email
-            if (results.length > 0) {
-                // mail details
-                let sender: string = "express@jwt.com";
-                let recipient: string | undefined = email;
-                let subject = "Password Reset";
-                let html = `<p>Thanks for requesting a password reset!</p> <br/> Copy this link to url: ${req.headers.host}/reset-password/${results[0].verify_token}`;
+                // if there is user verified, then send an email
+                if (results.length > 0) {
+                    // mail details
+                    let sender: string = "express@jwt.com";
+                    let recipient: string | undefined = email;
+                    let subject = "Password Reset";
+                    let html = `<p>Thanks for requesting a password reset!</p> <br/> Copy this link to url: ${req.headers.host}/reset-password/${results[0].verify_token}`;
 
-                // send verification email to user that has requested the password reset
-                await this.emailService.sendMail(res, sender, recipient, subject, html);
-            }
+                    // send verification email to user that has requested the password reset
+                    resolve(await this.emailService.sendMail(res, sender, recipient, subject, html));
+                }
+            });
         });
     }
 
