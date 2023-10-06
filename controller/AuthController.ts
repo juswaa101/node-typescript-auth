@@ -3,6 +3,7 @@ import { LocalStorage } from "node-localstorage";
 import { Result, ValidationError, validationResult } from "express-validator";
 import ResponseHelper from "../config/ResponseHelper";
 import AuthenticationService from "../services/AuthenticationService";
+import crypto from "crypto";
 import bcrypt from "bcrypt";
 import db from "../config/Database";
 import EmailService from "../services/EmailService";
@@ -88,7 +89,7 @@ class AuthController {
     verifyAccount = (req: Request, res: Response): void => {
         try {
             let id = parseInt(req.params.id) ?? 0;
-            let verify_token = require('crypto').randomBytes(32).toString('hex');
+            let verify_token = crypto.randomBytes(32).toString('hex');
 
             db.query("SELECT * FROM users WHERE id = ? AND verify_token IS NULL", [id], (selectError, userResults) => {
                 // check if there is error in finding a user that has a token already
